@@ -5,9 +5,9 @@
 ![Frontend](https://img.shields.io/badge/Frontend-HTML/CSS/JS-green)
 ![API](https://img.shields.io/badge/API-TMDB-fcba03)
 
-Content Based Recommender System recommends movies similar to the movie user likes and analyses the sentiments on the reviews given by the user for that movie.
+The Content-Based Recommender System suggests movies that are similar to the ones a user likes, while also analyzing the sentiments of reviews provided by the user for those movies.
 
-The details of the movies(title, genre, runtime, rating, poster, etc) are fetched using an API by TMDB, https://www.themoviedb.org/documentation/api, and using the IMDB id of the movie in the API, I did web scraping to get the reviews given by the user in the IMDB site using `beautifulsoup4` and performed sentiment analysis on those reviews.
+Movie details such as title, genre, runtime, rating, and poster are retrieved through the TMDB API (https://www.themoviedb.org/documentation/api). Using the IMDb ID of the movie, I performed web scraping on the IMDb site with beautifulsoup4 to gather user reviews and then conducted sentiment analysis on those reviews.
 
 ## How to get the API key?
 
@@ -25,12 +25,16 @@ Create an account in https://www.themoviedb.org/, click on the `API` link from t
 
 ## Similarity Score : 
 
-   How does it decide which item is most similar to the item user likes? Here come the similarity scores.
-   
-   It is a numerical value ranges between zero to one which helps to determine how much two items are similar to each other on a scale of zero to one. This similarity score is obtained measuring the similarity between the text details of both of the items. So, similarity score is the measure of similarity between given text details of two items. This can be done by cosine-similarity.
+   The system determines the most similar items to the ones a user likes using similarity scores, which are numerical values ranging from 0 to 1. These scores indicate how closely two items resemble each other, with 0 representing no similarity and 1 indicating identical items.
+
+To calculate this similarity, the system compares the textual descriptions of the items, such as their title, genre, plot summary, and other relevant details. By evaluating the textual content of both items, it generates a similarity score based on how alike the descriptions are. This comparison is often done using a method known as cosine similarity.
+
+Cosine similarity measures the angle between two vectors in a multidimensional space, where each vector represents the text of an item (e.g., using TF-IDF or word embeddings). If the angle between the vectors is small (i.e., the vectors point in the same direction), the cosine similarity score will be close to 1, meaning the items are very similar. Conversely, a larger angle results in a lower similarity score, indicating the items are less alike.
+
+In summary, the similarity score is a numerical value that reflects the degree of similarity between the text descriptions of two items, with cosine similarity being a common method for calculating it. This helps the system recommend movies that are most like the ones a user enjoys.
    
 ## How Cosine Similarity works?
-  Cosine similarity is a metric used to measure how similar the documents are irrespective of their size. Mathematically, it measures the cosine of the angle between two vectors projected in a multi-dimensional space. The cosine similarity is advantageous because even if the two similar documents are far apart by the Euclidean distance (due to the size of the document), chances are they may still be oriented closer together. The smaller the angle, higher the cosine similarity.
+ Cosine similarity is a metric used to assess the similarity between two documents, regardless of their size. It calculates the cosine of the angle between two vectors in a multi-dimensional space. This method is beneficial because, even if two similar documents are far apart in terms of Euclidean distance (due to differences in document length), they may still be oriented closer together. In other words, documents with a smaller angle between their vectors will have a higher cosine similarity, indicating they are more similar.
 
 ### Sources of the datasets 
 
@@ -40,7 +44,4 @@ Create an account in https://www.themoviedb.org/, click on the `API` link from t
 4. [List of movies in 2019](https://en.wikipedia.org/wiki/List_of_American_films_of_2019)
 5. [List of movies in 2020](https://en.wikipedia.org/wiki/List_of_American_films_of_2020)
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=kishan0725/AJAX-Movie-Recommendation-System-with-Sentiment-Analysis&type=Timeline)](https://star-history.com/#kishan0725/AJAX-Movie-Recommendation-System-with-Sentiment-Analysis&Timeline)
 
