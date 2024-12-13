@@ -18,12 +18,14 @@
 
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
 
+    
+    
 </head>
 
 <body id="content">
 	<div class="results">
 	    <center>
-	      <h2 id="name" class="text-uppercase">{{title}}</h2>
+	      <h2 id="name"  style="color:Black;" class="text-uppercase">{{title}}</h2>
 	    </center>
 	</div>
 	<br>
@@ -38,13 +40,13 @@
       </div>
       <div id="details">
         <br/>
-        <h6 id="title" style="color:white;">TITLE: &nbsp;{{title}}</h6>
-        <h6 id="overview" style="color:white;max-width: 85%">OVERVIEW: <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{overview}}</h6>
-        <h6 id="vote_average" style="color:white;">RATING: &nbsp;{{vote_average}}/10 ({{vote_count}} votes)</h6>
-        <h6 id="genres" style="color:white;">GENRE: &nbsp;{{genres}}</h6>
-        <h6 id="date" style="color:white;">RELEASE DATE: &nbsp;{{release_date}}</h6>
-        <h6 id="runtime" style="color:white;">RUNTIME: &nbsp;{{runtime}}</h6>
-        <h6 id="status" style="color:white;">STATUS: &nbsp;{{status}}</h6>
+        <h6 id="title" style="color:Black;">TITLE: &nbsp;{{title}}</h6>
+        <h6 id="overview" style="color:Black;max-width: 85%">OVERVIEW: <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{overview}}</h6>
+        <h6 id="vote_average" style="color:Black;">RATING: &nbsp;{{vote_average}}/10 ({{vote_count}} votes)</h6>
+        <h6 id="genres" style="color:Black;">GENRE: &nbsp;{{genres}}</h6>
+        <h6 id="date" style="color:Black;">RELEASE DATE: &nbsp;{{release_date}}</h6>
+        <h6 id="runtime" style="color:Black;">RUNTIME: &nbsp;{{runtime}}</h6>
+        <h6 id="status" style="color:Black;">STATUS: &nbsp;{{status}}</h6>
       </div>
     </div>
 </div>
