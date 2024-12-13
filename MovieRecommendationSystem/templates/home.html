@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Recommendation System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Auto Complete -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+  <script type="text/javascript">
+    var films = {{ suggestions|tojson }};
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('{{ url_for("static", filename="A_cinematic_background_image_featuring_a_film_reel.jpeg") }}') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    h1 {
+      font-weight: 600;
+      color: #e50914;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: white;  /* Change color of the title to white */
+      font-weight: 400;
+    }
+
+    .movie {
+      background-color: #fff;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      color: #495057;
+    }
+
+    .movie-button {
+      background-color: #e50914;
+      border-color: #e50914;
+      color: #fff;
+      transition: background-color 0.3s ease;
+      font-size: 18px;  /* Increase font size */
+      padding: 15px 30px; /* Increase padding for larger button */
+    }
+
+    .movie-button:hover {
+      background-color: #c40811;
+    }
+
+    .results {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .fail {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 243, 243, 0.9);
+      border: 1px solid #f5c6cb;
+      border-radius: 10px;
+      color: #721c24;
+      display: none;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    .footer span {
+      color: red;
+    }
+
+    #loader {
+      display: none;
+    }
+
+    .top-movies {
+      position: absolute;
+      top: 20%;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .top-movies.left {
+      left: 10px;
+      text-align: left;
+    }
+
+    .top-movies.right {
+      right: 10px;
+      text-align: right;
+    }
+
+    .movie-titles {
+      color: #fff;
+      font-size: 1rem;
+      margin: 5px 0;
+      opacity: 0;
+      animation: fadeInOut 6s infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    .movie-header {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="text-center mt-5">
+      <h1>Movie Recommendation System</h1>
+      <h2>Enter Movie Name to Search</h2>
+    </div>
+
+    <div class="top-movies left">
+      <div class="movie-header">Most Watched Movies</div>
+      <div class="movie-titles">Inception</div>
+      <div class="movie-titles">Titanic</div>
+      <div class="movie-titles">The Matrix</div>
+      <div class="movie-titles">Forrest Gump</div>
+    </div>
+
+    <div class="top-movies right">
+      <div class="movie-header">Most Watched Movies</div>
+      <div class="movie-titles">The Dark Knight</div>
+      <div class="movie-titles">Avatar</div>
+      <div class="movie-titles">Pulp Fiction</div>
+      <div class="movie-titles">Gladiator</div>
+    </div>
+
+    <div class="form-group text-center mt-4">
+      <input type="text" name="movie" class="movie form-control mx-auto" id="autoComplete" placeholder="Enter the Movie Name" style="max-width: 600px;" autocomplete="off" required>
+    </div>
+
+    <div class="form-group text-center">
+      <button class="btn btn-primary movie-button" disabled="true">Enter</button>
+    </div>
+
+    <div id="loader" class="text-center mt-4">
+      <div class="spinner-border text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <div class="fail">
+      <center><h5>Sorry! The movie you requested is not in our database. Please check the spelling or try another movie!</h5></center>
+    </div>
+
+    <div class="results">
+      <center>
+        <h2 id="name" class="text-uppercase"></h2>
+      </center>
+    </div>
+
+    <div class="footer">Made with <span>&hearts;</span> by Avinash</div>
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Custom Scripts -->
+  <script type="text/javascript" src="{{url_for('static', filename='autocomplete.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='recommend.js')}}"></script>
+</body>
+</html>
